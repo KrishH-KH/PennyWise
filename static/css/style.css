@@ -1,0 +1,303 @@
+
+:root {
+    --primary: #174B3A;
+    --primary-dark: #10382C;
+    --accent: #39B98A;
+    --background: #F4F7F5;
+    --surface: #FFFFFF;
+    --text: #192B24;
+    --muted: #819087;
+    --border: #E4EBE6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 16px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    padding: 42px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(23, 75, 58, 0.06);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 23px;
+    font-weight: 750;
+    color: var(--primary);
+    margin-bottom: 42px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 23px;
+}
+
+.auth-heading {
+    margin-bottom: 30px;
+}
+
+.auth-heading h2 {
+    font-size: 27px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.auth-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(57, 185, 138, 0.12);
+}
+
+.btn-finance {
+    background: var(--primary);
+    color: white;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    transition: 0.2s ease;
+}
+
+.btn-finance:hover {
+    background: var(--primary-dark);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.auth-footer {
+    margin-top: 26px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.flash-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: min(380px, calc(100% - 40px));
+    z-index: 1000;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 28px 22px;
+    }
+
+    .auth-heading h2 {
+        font-size: 24px;
+    }
+}
+
+/* Expense Management */
+
+.expense-form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 30px rgba(23, 75, 58, 0.04);
+}
+
+.expense-form-card h2 {
+    color: var(--text);
+}
+
+.back-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.category-tag {
+    display: inline-block;
+    background: #EAF5EF;
+    color: #174B3A;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border);
+}
+
+.table thead th {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 14px;
+}
+
+.pagination .page-link {
+    color: var(--primary);
+}
+
+.pagination .active .page-link {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .expense-form-card {
+        padding: 18px;
+    }
+}
+
+/* ==============================
+   PENNYWISE DASHBOARD
+============================== */
+
+.dashboard-card {
+    background: #ffffff;
+    border: 1px solid #e8eee9;
+    border-radius: 16px;
+    padding: 24px;
+    height: 100%;
+    box-shadow: 0 3px 12px rgba(25, 60, 40, 0.04);
+}
+
+.dashboard-label {
+    color: #718078;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.dashboard-card h3 {
+    color: #174b35;
+    font-size: 1.65rem;
+    font-weight: 750;
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-panel {
+    background: #ffffff;
+    border: 1px solid #e8eee9;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(25, 60, 40, 0.04);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+.chart-empty {
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #84918a;
+    padding: 24px;
+}
+
+.dashboard-panel .table {
+    margin-bottom: 0;
+}
+
+.dashboard-panel .table thead th {
+    color: #718078;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom-color: #e8eee9;
+    white-space: nowrap;
+}
+
+.dashboard-panel .table tbody td {
+    border-bottom-color: #f0f3f1;
+}
+
+@media (max-width: 576px) {
+    .dashboard-card,
+    .dashboard-panel {
+        padding: 18px;
+    }
+
+    .dashboard-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+}

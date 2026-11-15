@@ -1,0 +1,181 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | PennyWise{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <p class="text-muted mb-1">OVERVIEW</p>
+            <h2 class="fw-bold mb-1">Welcome back, {{ current_user.username }}!</h2>
+            <p class="text-muted mb-0">
+                Here's your financial summary for {{ today.strftime('%B %Y') }}.
+            </p>
+        </div>
+
+        <a href="{{ url_for('expenses.add') }}" class="btn btn-success mt-3 mt-md-0">
+            + Add Expense
+        </a>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="dashboard-card">
+                <p class="dashboard-label">Total Expenses</p>
+                <h3>₹{{ "%.2f"|format(total_expenses) }}</h3>
+                <span class="text-muted small">All recorded transactions</span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="dashboard-card">
+                <p class="dashboard-label">This Month</p>
+                <h3>₹{{ "%.2f"|format(monthly_expenses) }}</h3>
+                {% if monthly_change is not none %}
+                    <span class="small {% if monthly_change > 0 %}text-danger{% elif monthly_change < 0 %}text-success{% else %}text-muted{% endif %}">
+                        {{ "%.1f"|format(monthly_change|abs) }}%
+                        {% if monthly_change > 0 %}
+                            higher than last month
+                        {% elif monthly_change < 0 %}
+                            lower than last month
+                        {% else %}
+                            no change from last month
+                        {% endif %}
+                    </span>
+                {% else %}
+                    <span class="text-muted small">No previous-month data</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="dashboard-card">
+                <p class="dashboard-label">Today's Spending</p>
+                <h3>₹{{ "%.2f"|format(today_expenses) }}</h3>
+                <span class="text-muted small">{{ today.strftime('%d %B %Y') }}</span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="dashboard-card">
+                <p class="dashboard-label">Last Month</p>
+                <h3>₹{{ "%.2f"|format(previous_month_expenses) }}</h3>
+                <span class="text-muted small">Previous month's spending</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-lg-7">
+            <div class="dashboard-panel h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Daily Spending</h5>
+                    <span class="text-muted small">This month</span>
+                </div>
+
+                {% if daily_labels %}
+                    <div class="chart-container">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                {% else %}
+                    <div class="chart-empty">
+                        No spending data for this month yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+            <div class="dashboard-panel h-100">
+                <h5 class="fw-bold mb-3">Spending by Category</h5>
+
+                {% if category_labels %}
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                {% else %}
+                    <div class="chart-empty">
+                        Add expenses to see your category breakdown.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent transactions -->
+    <div class="dashboard-panel">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+                <h5 class="fw-bold mb-1">Recent Transactions</h5>
+                <p class="text-muted small mb-0">Your latest five expenses</p>
+            </div>
+
+            <a href="{{ url_for('expenses.index') }}" class="btn btn-outline-success btn-sm">
+                View All
+            </a>
+        </div>
+
+        {% if recent_expenses %}
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Expense</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Payment</th>
+                            <th class="text-end">Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for expense in recent_expenses %}
+                        <tr>
+                            <td class="fw-semibold">{{ expense.title }}</td>
+                            <td>{{ expense.category.name }}</td>
+                            <td>{{ expense.expense_date.strftime('%d %b %Y') }}</td>
+                            <td>{{ expense.payment_method }}</td>
+                            <td class="text-end fw-semibold">
+                                ₹{{ "%.2f"|format(expense.amount) }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="chart-empty">
+                You haven't recorded any expenses yet.
+                <br>
+                <a href="{{ url_for('expenses.add') }}" class="btn btn-success btn-sm mt-3">
+                    Add your first expense
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script type="application/json" id="dashboard-data">
+    {{ {
+        "daily_labels": daily_labels,
+        "daily_amounts": daily_amounts,
+        "category_labels": category_labels,
+        "category_amounts": category_amounts
+    } | tojson }}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
