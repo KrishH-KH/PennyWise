@@ -56,7 +56,7 @@ The application is designed around a simple idea: managing personal finances sho
 
 ### Login
 
-![PennyWise Login](static/images/login.png)
+![PennyWise Login](static/images/login.png?v=2)
 
 
 
