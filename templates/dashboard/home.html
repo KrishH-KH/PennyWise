@@ -15,9 +15,20 @@
             </p>
         </div>
 
-        <a href="{{ url_for('expenses.add') }}" class="btn btn-success mt-3 mt-md-0">
-            + Add Expense
-        </a>
+
+<div class="d-flex gap-2 mt-3 mt-md-0">
+    <a href="{{ url_for('expenses.add') }}" class="btn btn-success">
+        + Add Expense
+    </a>
+
+    <form method="POST" action="{{ url_for('auth.logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-danger">
+            Logout
+        </button>
+    </form>
+</div>
+
     </div>
 
     <!-- Summary cards -->

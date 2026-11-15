@@ -1,38 +1,96 @@
-# PennyWise — Personal Expense Management
+# PennyWise
 
-PennyWise is a web-based personal expense management application built with Flask. It helps users record expenses, organize spending by category, and understand their spending habits through an interactive dashboard.
+<p align="center">
+  <img src="static/images/pennywise-banner.png" alt="PennyWise — Track. Manage. Save." width="100%">
+</p>
 
-The project focuses on making everyday expense tracking simple through a clean interface and a lightweight database.
+<p align="center">
+  <strong>A simple, intuitive way to track expenses and understand your spending.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/KrishH-KH/PennyWise">GitHub Repository</a> ·
+  <a href="https://github.com/KrishH-KH/PennyWise/issues">Report an Issue</a> ·
+  <a href="#getting-started">Getting Started</a> ·
+  <a href="#screenshots">Screenshots</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/Frontend-Bootstrap-7952B3?logo=bootstrap&logoColor=white" alt="Bootstrap">
+</p>
+
+---
+
+## Overview
+
+**PennyWise** is a web-based personal expense management application developed using Python and Flask.
+
+It provides a straightforward way to record everyday expenses, organize transactions by category, and review spending patterns through a visual dashboard.
+
+The application is designed around a simple idea: managing personal finances should be clear, accessible, and easy to maintain.
 
 ## Features
 
-- **User Authentication** — User registration and login with securely hashed passwords.
-- **Expense Management** — Add, view, edit and delete expense records.
-- **Expense Organization** — Organize transactions using categories.
-- **Dashboard** — View an overview of expenses and recent transactions.
-- **Spending Visualizations** — Interactive charts for category-wise and daily expense breakdowns.
-- **Monthly Overview** — View spending totals and monthly comparisons.
-- **INR Support** — Expense amounts are displayed in Indian Rupees.
-- **Responsive Interface** — Built with Bootstrap for a clean user experience.
+- **User Authentication** — Register and log in with securely hashed passwords.
+- **Expense Tracking** — Create, view, update, and delete expense records.
+- **Category Organization** — Associate expenses with spending categories.
+- **Interactive Dashboard** — Review expense summaries and recent transactions.
+- **Spending Charts** — Visualize category-wise and daily expense activity.
+- **Monthly Overview** — Review monthly spending information.
+- **INR Currency Support** — Display expense amounts in Indian Rupees.
+- **Form Protection** — Use CSRF protection for supported forms.
 
-## Tech Stack
+## Screenshots
 
-| Component | Technology |
+
+### Dashboard
+
+![PennyWise Dashboard](static/images/dashboard.png)
+
+### Expense Management
+
+![PennyWise Expense Management](static/images/expenses.png)
+
+### Login
+
+![PennyWise Login](static/images/login.png)
+
+
+
+## Technology Stack
+
+| Area | Technology |
 |---|---|
 | Backend | Python, Flask |
-| Frontend | HTML, CSS, JavaScript |
+| Frontend | HTML5, CSS3, JavaScript |
 | UI Framework | Bootstrap 5 |
 | Charts | Chart.js |
 | Database | SQLite |
 | ORM | Flask-SQLAlchemy |
-| Database Migrations | Flask-Migrate |
+| Migrations | Flask-Migrate |
 | Authentication | Flask-Login |
-| Forms & CSRF Protection | Flask-WTF |
+| Forms | Flask-WTF, WTForms |
+| Environment Configuration | python-dotenv |
+
+### Useful Documentation
+
+- [Python](https://docs.python.org/3/)
+- [Flask](https://flask.palletsprojects.com/)
+- [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/)
+- [Flask-Migrate](https://flask-migrate.readthedocs.io/)
+- [Flask-Login](https://flask-login.readthedocs.io/)
+- [Bootstrap](https://getbootstrap.com/docs/5.3/)
+- [Chart.js](https://www.chartjs.org/docs/latest/)
+- [SQLite](https://www.sqlite.org/docs.html)
 
 ## Project Structure
 
 ```text
 PennyWise/
+│
 ├── app.py
 ├── config.py
 ├── requirements.txt
@@ -40,29 +98,57 @@ PennyWise/
 ├── .env.example
 │
 ├── forms/
+│   ├── __init__.py
+│   ├── auth_forms.py
+│   └── expense_forms.py
+│
 ├── models/
+│   ├── __init__.py
+│   ├── user.py
+│   ├── expense.py
+│   ├── category.py
+│   └── budget.py
+│
 ├── routes/
+│   ├── __init__.py
+│   ├── auth.py
+│   ├── dashboard.py
+│   ├── expenses.py
+│   ├── budget.py
+│   ├── categories.py
+│   └── reports.py
+│
 ├── migrations/
+│   └── versions/
 │
 ├── templates/
 │   ├── auth/
 │   ├── dashboard/
-│   └── expenses/
+│   ├── expenses/
+│   └── base.html
 │
-└── static/
-    ├── css/
-    ├── js/
+├── static/
+│   ├── css/
+│   └── js/
+│
+└── docs/
     └── images/
 ```
 
 ## Getting Started
 
-Follow these steps to run PennyWise locally.
+Follow these instructions to set up PennyWise on your local machine.
+
+### Prerequisites
+
+- Python 3 installed
+- Git installed
+- pip package manager
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/PennyWise.git
+git clone https://github.com/KrishH-KH/PennyWise.git
 cd PennyWise
 ```
 
@@ -86,22 +172,28 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Create your local `.env` file from the example:
+Create your local environment file:
 
 ```bash
 copy .env.example .env
 ```
 
-Open `.env` and replace the placeholder secret key with your own secure random value.
+Open `.env` and replace the placeholder secret key with a secure value.
 
-Example:
+You can generate one using:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Your `.env` should contain:
 
 ```env
-SECRET_KEY=your-own-secret-key
+SECRET_KEY=your-generated-secret-key
 DATABASE_URL=sqlite:///pennywise.db
 ```
 
-**Important:** Never upload your actual `.env` file or database credentials to GitHub.
+**Never commit your `.env` file or share your secret key.**
 
 ### 5. Initialize the database
 
@@ -111,38 +203,58 @@ Apply the database migrations:
 flask --app app db upgrade
 ```
 
-### 6. Seed default categories
+### 6. Add default expense categories
 
 ```bash
 python seed_categories.py
 ```
 
-### 7. Run the application
+### 7. Start the application
 
 ```bash
 python app.py
 ```
 
-Open the local application in your browser at:
+Open your browser and visit:
 
-```text
-http://127.0.0.1:5000/
-```
+**http://127.0.0.1:5000/**
 
 ## Security
 
-- Passwords are stored using password hashing rather than plain text.
-- CSRF protection is implemented for forms.
-- Environment-specific configuration is kept outside the repository.
-- Local database files and virtual environments are excluded from version control.
+PennyWise includes several basic security measures:
 
-## Planned Improvements
+- Password hashing through Werkzeug.
+- CSRF protection through Flask-WTF.
+- Environment-based secret configuration.
+- Local database and environment files excluded from version control.
 
-- Budget creation and tracking.
-- Detailed expense reports.
-- Data export functionality.
-- Additional spending insights and analytics.
+This project is intended for learning and development. Review and strengthen its security before using it to store real financial information.
 
-## License
+## Future Improvements
 
-License details have not yet been specified.
+Potential areas for further development:
+
+- Budget creation and tracking workflows.
+- More detailed spending reports.
+- Expense data export.
+- Additional financial insights.
+- Further UI and accessibility improvements.
+
+## Contributing
+
+Suggestions, bug reports, and improvements are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Submit a pull request.
+
+For bugs or suggestions, [open an issue](https://github.com/KrishH-KH/PennyWise/issues).
+
+---
+
+<p align="center">
+  <strong>PennyWise — Track. Manage. Save.</strong>
+  <br>
+  Built with Python and Flask.
+</p>
